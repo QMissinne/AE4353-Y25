@@ -1,3 +1,0 @@
-_target_: ex_2.model.VarIOResNet
-_partial_: true
-last_layer_bias: true

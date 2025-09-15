@@ -1,3 +1,0 @@
-_target_: ex_2.dataset.PolImgDataset
-dataset_path: /media/qmissinne/Starry/AE4353/AE4353-Datasets-2024/polarization_dataset
-h5: true

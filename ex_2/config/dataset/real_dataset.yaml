@@ -1,5 +1,0 @@
-prefix: ""
-augment: True
-
-defaults:
-  - dataset_base
