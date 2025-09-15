@@ -6,7 +6,7 @@ import os
 
 
 class PolImgDataset(Dataset):
-    def __init__(self, dataset_path, prefix="", h5=False, augment=False):
+    def __init__(self, dataset_path, prefix="", h5=False, augment=True):
         self.h5 = h5
         self.augment = augment
         if self.h5:
@@ -40,22 +40,13 @@ class PolImgDataset(Dataset):
             maps, vector, angles = self.maps[idx], self.vector[idx], self.angles[idx]
 
         if self.augment:
-            swap_45_135 = False
-            if self.augment and torch.rand(1) < 0.5:
-                # Horizontal Flip
-                maps = maps.flip(2)
-                vector = vector * torch.tensor([-1, 1])
-                angles = torch.remainder(180 - angles, 360)
-                swap_45_135 = not swap_45_135
-            if self.augment and torch.rand(1) < 0.5:
-                # Vertical Flip
-                maps = maps.flip(1)
-                swap_45_135 = not swap_45_135
-                vector = vector * torch.tensor([1, -1])
-                angles = torch.remainder(360 - angles, 360)
-
-            if swap_45_135:
-                maps = maps.index_select(0, torch.tensor([0, 3, 2, 1]))
+            # -----------------------------------------------------------------------
+            # OPTIONAL TODO: Data Augmentation
+            # -----------------------------------------------------------------------
+            pass
+            # -----------------------------------------------------------------------
+            # END OPTIONAL
+            # -----------------------------------------------------------------------
 
         return maps, vector, angles
 
@@ -63,7 +54,33 @@ class PolImgDataset(Dataset):
 if __name__ == "__main__":
     dataset = PolImgDataset(
         # "/workspaces/msc-ai-course/data/polarization_dataset", h5=False, augment=True
-        "/media/qmissinne/starry/AE4353/AE4353-Datasets-2024/polarization_dataset", h5 = False, augment=True
+        "/home/qmissinne/MAVLab/AE4353-Y24/data/polarization_dataset", h5 = False, augment=True
     )
     sample = dataset[5]
     print(sample)
+
+# SOLUTION TO DATA AUGMENTATION:
+            # # -----------------------------------------------------------------------
+            # # OPTIONAL TODO: Data Augmentation
+            # # -----------------------------------------------------------------------
+
+            # swap_45_135 = False
+            # if self.augment and torch.rand(1) < 0.5:
+            #     # Horizontal Flip
+            #     maps = maps.flip(2)
+            #     vector = vector * torch.tensor([-1, 1])
+            #     angles = torch.remainder(180 - angles, 360)
+            #     swap_45_135 = not swap_45_135
+            # if self.augment and torch.rand(1) < 0.5:
+            #     # Vertical Flip
+            #     maps = maps.flip(1)
+            #     swap_45_135 = not swap_45_135
+            #     vector = vector * torch.tensor([1, -1])
+            #     angles = torch.remainder(360 - angles, 360)
+
+            # if swap_45_135:
+            #     maps = maps.index_select(0, torch.tensor([0, 3, 2, 1]))
+            
+            # # -----------------------------------------------------------------------
+            # # END OPTIONAL
+            # # -----------------------------------------------------------------------
